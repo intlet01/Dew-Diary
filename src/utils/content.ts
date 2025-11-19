@@ -43,6 +43,15 @@ export async function GetSortedPosts() {
     return import.meta.env.PROD ? data.draft !== true : true;
   });
   const sorted = allBlogPosts.sort((a, b) => {
+    // First, sort by pinned status (pinned posts come first)
+    const aPinned = a.data.pinned || false;
+    const bPinned = b.data.pinned || false;
+    
+    if (aPinned !== bPinned) {
+      return aPinned ? -1 : 1;  // Pinned posts first
+    }
+    
+    // Then sort by date (newest first)
     const dateA = new Date(a.data.published);
     const dateB = new Date(b.data.published);
     return dateA > dateB ? -1 : 1;

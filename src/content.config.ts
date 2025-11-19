@@ -10,6 +10,7 @@ const posts = defineCollection({
     title: z.string(),
     published: z.date(),
     draft: z.boolean().optional(),
+    pinned: z.boolean().optional(),  // NEW: Pin post to top
     description: z.string().optional(),
     cover: z.string().optional(),
     tags: z.array(z.string()).optional(),
