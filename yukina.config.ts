@@ -33,7 +33,7 @@ const YukinaConfig: Configuration = {
 
   username: "Dew",
   sign: "Ad Astra Per Aspera.",
-  avatarUrl: "https://s2.loli.net/2025/01/25/FPpTrQSezM8ivbl.webp",
+  avatarUrl: "/profile.jpg",
   socialLinks: [
     {
       icon: "line-md:github-loop",
