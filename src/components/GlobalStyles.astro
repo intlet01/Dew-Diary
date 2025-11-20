@@ -10,6 +10,18 @@ import "overlayscrollbars/overlayscrollbars.css";
   :root {
     --hue: 300;
 
+    /* Fallback colors for browsers that don't support oklch */
+    --primary-color: #b366cc;
+    --primary-color-lighten: #f5ecf9;
+    --primary-color-hover: #ede4f2;
+    --primary-color-transparent: rgba(179, 102, 204, 0.15);
+    --text-color: #333333;
+    --text-color-lighten: #808080;
+    --card-color: #ffffff;
+    --card-color-transparent: rgba(255, 255, 255, 0.85);
+    --background-color: #f7f5f8;
+
+    /* Modern browsers with oklch support */
     --primary-color: oklch(70% 0.15 var(--hue));
     --primary-color-lighten: oklch(95% 0.02 var(--hue));
     --primary-color-hover: oklch(90% 0.025 var(--hue));
@@ -37,7 +49,20 @@ import "overlayscrollbars/overlayscrollbars.css";
     --onload-animation-interval: 100ms;
   }
 
-  :root.dark {
+  :root.dark,
+  html.dark {
+    /* Fallback colors for browsers that don't support oklch */
+    --primary-color: #b366cc;
+    --primary-color-lighten: #665580;
+    --primary-color-hover: #332940;
+    --text-color: #f2f2f5;
+    --text-color-lighten: #e6e6e9;
+    --card-color: #403340;
+    --card-color-lighten: #665580;
+    --card-color-transparent: rgba(64, 51, 64, 0.85);
+    --background-color: #2a242d;
+
+    /* Modern browsers with oklch support */
     --primary-color: oklch(70% 0.125 var(--hue));
     --primary-color-lighten: oklch(40% 0.04 var(--hue));
     --primary-color-hover: oklch(20% 0.015 var(--hue));
