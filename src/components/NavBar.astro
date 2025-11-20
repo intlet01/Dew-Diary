@@ -10,7 +10,7 @@ import "astro-pagefind";
 const navCount = YukinaConfig.navigators.length;
 ---
 
-<nav class="nav" id="nav">
+<nav class="nav" id="nav" role="navigation" aria-label="Main navigation">
   <div
     class="relative flex h-[4rem] w-full items-center justify-between overflow-visible lg:h-[4.5rem]"
   >
@@ -19,6 +19,9 @@ const navCount = YukinaConfig.navigators.length;
         id="menu-switcher"
         type="button"
         class="h-[40px] w-[44px] content-center"
+        aria-label="Toggle mobile menu"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
       >
         <Icon
           id="menu-icon-closed"
@@ -60,7 +63,12 @@ const navCount = YukinaConfig.navigators.length;
         <SearchBar client:only="svelte" />
       </div>
       <div class="theme">
-        <button type="button" id="theme-switcher">
+        <button 
+          type="button" 
+          id="theme-switcher"
+          aria-label="Toggle dark mode"
+          aria-pressed="false"
+        >
           <Icon
             id="theme-icon-light"
             name="line-md:moon-alt-to-sunny-outline-loop-transition"
@@ -245,11 +253,13 @@ const navCount = YukinaConfig.navigators.length;
         "mobile-menu-nav-opened",
         "mobile-menu-nav-closed",
       );
+      menuSwitcher.setAttribute("aria-expanded", "false");
     } else {
       mobileMenuNav.classList.replace(
         "mobile-menu-nav-closed",
         "mobile-menu-nav-opened",
       );
+      menuSwitcher.setAttribute("aria-expanded", "true");
     }
     isMenuOpen = !isMenuOpen;
   };
@@ -295,6 +305,7 @@ const navCount = YukinaConfig.navigators.length;
   // Set theme
   const setTheme = (theme: string) => {
     const html = document.documentElement;
+    const themeSwitcherBtn = document.getElementById("theme-switcher");
     
     html.setAttribute("data-theme", theme);
     
@@ -319,10 +330,12 @@ const navCount = YukinaConfig.navigators.length;
       html.classList.add("dark");
       html.style.backgroundColor = '#2a242d';
       html.style.color = '#f2f2f5';
+      if (themeSwitcherBtn) themeSwitcherBtn.setAttribute("aria-pressed", "true");
     } else {
       html.classList.remove("dark");
       html.style.backgroundColor = '';
       html.style.color = '';
+      if (themeSwitcherBtn) themeSwitcherBtn.setAttribute("aria-pressed", "false");
     }
   };
 

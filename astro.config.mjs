@@ -19,6 +19,17 @@ import pagefind from "astro-pagefind";
 // https://astro.build/config
 export default defineConfig({
   site: YukinaConfig.site,
+  
+  // Performance optimizations
+  build: {
+    inlineStylesheets: 'auto',
+  },
+  
+  // Image optimization
+  image: {
+    domains: ['fastly.jsdelivr.net', 'fonts.bunny.net'],
+  },
+  
   integrations: [
     tailwind(),
     svelte(),

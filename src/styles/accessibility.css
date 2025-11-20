@@ -1,0 +1,142 @@
+/* Accessibility Improvements */
+
+/* Skip to main content link */
+.skip-to-main {
+  position: absolute;
+  left: -9999px;
+  z-index: 999;
+  padding: 1em;
+  background-color: var(--card-color);
+  color: var(--text-color);
+  text-decoration: none;
+  border-radius: 0.25rem;
+}
+
+.skip-to-main:focus {
+  left: 50%;
+  top: 1rem;
+  transform: translateX(-50%);
+  outline: 3px solid var(--primary-color);
+}
+
+/* Better focus indicators */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 3px solid var(--primary-color);
+  outline-offset: 2px;
+  border-radius: 0.25rem;
+}
+
+/* Remove default focus for mouse users */
+a:focus:not(:focus-visible),
+button:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Improved color contrast for links */
+a {
+  text-decoration-color: var(--primary-color);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 2px;
+}
+
+/* Better button states */
+button:hover,
+a:hover {
+  opacity: 0.8;
+  transition: opacity 0.2s ease;
+}
+
+button:active,
+a:active {
+  opacity: 0.6;
+}
+
+/* Screen reader only class */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  * {
+    border-color: currentColor !important;
+  }
+  
+  button,
+  a {
+    outline: 2px solid currentColor;
+  }
+}
+
+/* Better text selection */
+::selection {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+/* Ensure minimum touch target size (44x44px) */
+button,
+a,
+input[type="checkbox"],
+input[type="radio"] {
+  min-width: 44px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Form labels */
+label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+/* Error states */
+input:invalid:not(:placeholder-shown),
+textarea:invalid:not(:placeholder-shown) {
+  border-color: #dc2626;
+  outline-color: #dc2626;
+}
+
+/* Success states */
+input:valid:not(:placeholder-shown),
+textarea:valid:not(:placeholder-shown) {
+  border-color: #16a34a;
+}
+
+/* Loading states */
+[aria-busy="true"] {
+  cursor: wait;
+  opacity: 0.6;
+}
+
+/* Hidden but accessible */
+[hidden]:not([hidden="until-found"]) {
+  display: none !important;
+}

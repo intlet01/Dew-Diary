@@ -37,7 +37,7 @@ const props = Astro.props;
         <SideBar />
       </div>
       <div class="transition-leaving w-full space-y-8">
-        <main class="content onload-animation">
+        <main id="main-content" class="content onload-animation" role="main" aria-label="Main content">
           <slot />
         </main>
         <Footer />

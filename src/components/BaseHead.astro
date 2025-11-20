@@ -45,17 +45,37 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 <!-- SiteMap -->
 <link rel="sitemap" href="/sitemap-index.xml" />
 
-<!-- CSS -->
+<!-- CSS - Only load KaTeX if needed -->
+<link
+  rel="preload"
+  as="style"
+  href="https://fastly.jsdelivr.net/npm/katex/dist/katex.min.css"
+/>
 <link
   rel="stylesheet"
   href="https://fastly.jsdelivr.net/npm/katex/dist/katex.min.css"
+  media="print"
+  onload="this.media='all'"
 />
-<!-- Fonts -->
-<link rel="preconnect" href="https://fonts.bunny.net" />
+<!-- Fonts - Optimized loading -->
+<link rel="preconnect" href="https://fonts.bunny.net" crossorigin />
 <link
-  href="https://fonts.bunny.net/css?family=noto-sans-sc:100,200,300,400,500,600,700,800,900|raleway:500,700"
-  rel="stylesheet"
+  rel="preload"
+  as="style"
+  href="https://fonts.bunny.net/css?family=noto-sans-sc:400,500,700|raleway:500,700&display=swap"
 />
+<link
+  href="https://fonts.bunny.net/css?family=noto-sans-sc:400,500,700|raleway:500,700&display=swap"
+  rel="stylesheet"
+  media="print"
+  onload="this.media='all'"
+/>
+<noscript>
+  <link
+    href="https://fonts.bunny.net/css?family=noto-sans-sc:400,500,700|raleway:500,700&display=swap"
+    rel="stylesheet"
+  />
+</noscript>
 
 <!-- Theme initialization (must be FIRST before ANY rendering) -->
 <script is:inline>
