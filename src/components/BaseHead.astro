@@ -108,11 +108,11 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     }
     
     // IMMEDIATELY remove inline styles to allow CSS transitions
-    // This runs as soon as the script executes, before render
-    requestAnimationFrame(function() {
+    // Small delay to ensure the initial render with dark bg, then remove for transitions
+    setTimeout(function() {
       html.style.backgroundColor = '';
       html.style.color = '';
-    });
+    }, 50);
   })();
 </script>
 

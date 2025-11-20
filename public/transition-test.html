@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transition Test - Dew Diary</title>
+    <style>
+        :root {
+            --bg-light: #f7f5f8;
+            --text-light: #333333;
+            --card-light: #ffffff;
+            --bg-dark: #2a242d;
+            --text-dark: #f2f2f5;
+            --card-dark: #403340;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        /* Smooth transitions */
+        * {
+            transition: background-color 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                        color 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                        border-color 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        }
+        
+        html {
+            background-color: var(--bg-light);
+            color: var(--text-light);
+        }
+        
+        html.dark {
+            background-color: var(--bg-dark);
+            color: var(--text-dark);
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: var(--bg-light);
+            color: var(--text-light);
+        }
+        
+        html.dark body {
+            background-color: var(--bg-dark);
+            color: var(--text-dark);
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .card {
+            background: var(--card-light);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border: 2px solid #e0e0e0;
+        }
+        
+        html.dark .card {
+            background: var(--card-dark);
+            border-color: #665580;
+        }
+        
+        button {
+            background: #b366cc;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px 5px;
+        }
+        
+        button:hover {
+            opacity: 0.8;
+        }
+        
+        h1, h2, h3 {
+            margin-bottom: 15px;
+        }
+        
+        .test-element {
+            padding: 15px;
+            margin: 10px 0;
+            border: 2px solid currentColor;
+            border-radius: 5px;
+        }
+        
+        .status {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        html.dark .status {
+            background: #665580;
+            color: #f2f2f5;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎨 Transition Test</h1>
+        
+        <div class="card">
+            <h2>Toggle Theme</h2>
+            <button onclick="toggleTheme()">Toggle Dark/Light Mode</button>
+            <p>Current: <span id="current-theme">Light</span></p>
+        </div>
+        
+        <div class="card">
+            <h2>Test Elements</h2>
+            <div class="test-element">Test Element 1</div>
+            <div class="test-element">Test Element 2</div>
+            <div class="test-element">Test Element 3</div>
+        </div>
+        
+        <div class="card">
+            <h2>Instructions</h2>
+            <div class="status">
+                <strong>✅ Good Transition:</strong> Colors change smoothly over ~0.35 seconds
+            </div>
+            <div class="status">
+                <strong>❌ Bad Transition:</strong> Colors snap/jump instantly
+            </div>
+            <p>Click the toggle button multiple times and observe if the transition is smooth.</p>
+        </div>
+        
+        <div class="card">
+            <h2>Debug Info</h2>
+            <div id="debug"></div>
+        </div>
+    </div>
+
+    <script>
+        function toggleTheme() {
+            const html = document.documentElement;
+            const isDark = html.classList.contains('dark');
+            
+            if (isDark) {
+                html.classList.remove('dark');
+                document.getElementById('current-theme').textContent = 'Light';
+            } else {
+                html.classList.add('dark');
+                document.getElementById('current-theme').textContent = 'Dark';
+            }
+            
+            updateDebug();
+        }
+        
+        function updateDebug() {
+            const html = document.documentElement;
+            const body = document.body;
+            
+            const htmlBg = getComputedStyle(html).backgroundColor;
+            const bodyBg = getComputedStyle(body).backgroundColor;
+            const htmlTransition = getComputedStyle(html).transition;
+            const bodyTransition = getComputedStyle(body).transition;
+            
+            document.getElementById('debug').innerHTML = `
+                <p><strong>HTML Background:</strong> ${htmlBg}</p>
+                <p><strong>Body Background:</strong> ${bodyBg}</p>
+                <p><strong>HTML Transition:</strong> ${htmlTransition.substring(0, 100)}...</p>
+                <p><strong>Body Transition:</strong> ${bodyTransition.substring(0, 100)}...</p>
+                <p><strong>Dark Class:</strong> ${html.classList.contains('dark') ? 'Yes' : 'No'}</p>
+            `;
+        }
+        
+        // Update debug on load
+        updateDebug();
+    </script>
+</body>
+</html>

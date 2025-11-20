@@ -6,6 +6,7 @@ import "../styles/searchbar.css";
 import "../styles/darkmode.css";
 import "../styles/accessibility.css";
 import "overlayscrollbars/overlayscrollbars.css";
+import "../styles/theme-transitions.css"; // Load last for maximum specificity
 ---
 
 <style is:global>
@@ -85,27 +86,11 @@ import "overlayscrollbars/overlayscrollbars.css";
   body {
     background-color: var(--background-color);
     color: var(--text-color);
-    transition: background-color 0.3s ease, color 0.3s ease;
   }
 
   html.dark body,
   :root.dark body {
     background-color: var(--background-color);
     color: var(--text-color);
-  }
-
-  /* Smooth transitions for theme switching */
-  html,
-  body,
-  .card,
-  [class*="bg-"],
-  [class*="text-"],
-  nav,
-  header,
-  footer,
-  main {
-    transition: background-color 0.3s ease, 
-                color 0.3s ease, 
-                border-color 0.3s ease;
   }
 </style>

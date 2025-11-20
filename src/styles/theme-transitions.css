@@ -1,0 +1,71 @@
+/* Theme Transition Styles - Load Last for Maximum Specificity */
+
+/* Critical: Apply smooth transitions to ALL elements for theme changes */
+html {
+  transition: background-color 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+body {
+  transition: background-color 0.35s cubic-bezier(0.4, 0, 0.2, 1), 
+              color 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Universal smooth transition for theme colors */
+* {
+  transition-property: background-color, border-color, color, fill, stroke, box-shadow !important;
+  transition-duration: 0.35s !important;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Preserve other transitions for interactive elements */
+a,
+button,
+input,
+textarea,
+select {
+  transition: background-color 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              color 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.2s ease,
+              transform 0.2s ease !important;
+}
+
+/* No transition for media elements */
+img,
+video,
+iframe,
+canvas,
+svg path,
+svg circle,
+svg rect {
+  transition: none !important;
+}
+
+/* Cards and containers */
+.card,
+[class*="card"],
+nav,
+header,
+footer,
+main,
+aside,
+section {
+  transition: background-color 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              color 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Override any Tailwind transitions for theme colors */
+[class*="transition-"],
+[class*="duration-"] {
+  transition-property: background-color, border-color, color, fill, stroke, box-shadow, opacity, transform !important;
+  transition-duration: 0.35s !important;
+}
+
+/* Ensure pseudo-elements also transition */
+*::before,
+*::after {
+  transition: background-color 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              color 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
