@@ -44,6 +44,11 @@ export default defineConfig({
       updateHead: true,
       updateBodyClass: false,
       globalInstance: true,
+      // Ignore theme transitions
+      ignoreVisit: (url, { el } = {}) => {
+        // Don't use Swup for theme toggle buttons
+        return el?.id === 'theme-switcher' || el?.closest('#theme-switcher');
+      },
     }),
     sitemap(),
     pagefind(),

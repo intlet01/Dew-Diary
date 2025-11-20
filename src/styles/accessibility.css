@@ -99,15 +99,26 @@ a:active {
 }
 
 /* Ensure minimum touch target size (44x44px) */
+/* Only apply to actual buttons and form controls, not all links */
 button,
-a,
 input[type="checkbox"],
-input[type="radio"] {
+input[type="radio"],
+button.touch-target,
+a.touch-target {
   min-width: 44px;
   min-height: 44px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+}
+
+/* Navigation and icon buttons should have touch targets */
+nav button,
+nav a[role="button"],
+[role="button"],
+.icon-button {
+  min-width: 44px;
+  min-height: 44px;
 }
 
 /* Form labels */

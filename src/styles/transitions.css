@@ -1,15 +1,16 @@
+/* Swup Page Transitions - Synced with theme transitions */
 .transition-leaving {
   transition:
-    transform 300ms,
-    opacity 300ms;
+    transform 350ms cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 350ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 html.is-changing .transition-main {
-  transition: opacity 250ms ease-in-out;
+  transition: opacity 350ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 html.is-leaving .transition-main {
-  transition: opacity 250ms ease-in-out;
+  transition: opacity 350ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 html.is-animating .transition-main {
@@ -19,4 +20,14 @@ html.is-animating .transition-main {
 html.is-animating.is-leaving .transition-leaving {
   transform: translateY(2rem);
   opacity: 0;
+}
+
+/* Prevent Swup from interfering with theme transitions */
+html.is-changing,
+html.is-leaving,
+html.is-animating {
+  /* Allow theme transitions to work during page transitions */
+  * {
+    transition-property: background-color, border-color, color, fill, stroke, box-shadow, opacity, transform !important;
+  }
 }
