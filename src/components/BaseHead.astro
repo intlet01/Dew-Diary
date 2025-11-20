@@ -107,12 +107,14 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
       }
     }
     
-    // IMMEDIATELY remove inline styles to allow CSS transitions
-    // Small delay to ensure the initial render with dark bg, then remove for transitions
-    setTimeout(function() {
-      html.style.backgroundColor = '';
-      html.style.color = '';
-    }, 50);
+    // Remove inline styles to allow CSS transitions
+    // Wait for next paint to ensure CSS is fully loaded
+    requestAnimationFrame(function() {
+      requestAnimationFrame(function() {
+        html.style.backgroundColor = '';
+        html.style.color = '';
+      });
+    });
   })();
 </script>
 

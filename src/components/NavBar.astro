@@ -337,7 +337,21 @@ const navCount = YukinaConfig.navigators.length;
 
   // Click to switch theme
   themeSwitcher.addEventListener("click", () => {
-    setTheme(currentTheme === "light" ? "dark" : "light");
+    const newTheme = currentTheme === "light" ? "dark" : "light";
+    
+    // Debug: Log transition status
+    if (window.location.hostname === 'localhost' || window.location.hostname.includes('127.0.0.1')) {
+      const html = document.documentElement;
+      const computedStyle = getComputedStyle(html);
+      console.log('🎨 Theme Switch:', {
+        from: currentTheme,
+        to: newTheme,
+        htmlTransition: computedStyle.transition.substring(0, 100),
+        hasTransition: computedStyle.transition.includes('background-color')
+      });
+    }
+    
+    setTheme(newTheme);
   });
 
   // Initialize

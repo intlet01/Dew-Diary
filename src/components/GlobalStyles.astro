@@ -6,7 +6,7 @@ import "../styles/searchbar.css";
 import "../styles/darkmode.css";
 import "../styles/accessibility.css";
 import "overlayscrollbars/overlayscrollbars.css";
-import "../styles/theme-transitions.css"; // Load last for maximum specificity
+// Removed theme-transitions.css - now inlined in GlobalStyles for guaranteed loading
 ---
 
 <style is:global>
@@ -92,5 +92,45 @@ import "../styles/theme-transitions.css"; // Load last for maximum specificity
   :root.dark body {
     background-color: var(--background-color);
     color: var(--text-color);
+  }
+
+  /* ===== CRITICAL: SYNCHRONIZED THEME TRANSITIONS ===== */
+  /* Force ALL elements to transition together at the SAME time */
+  /* Inline here for guaranteed loading before any other styles */
+  
+  /* Prepare browser for theme changes */
+  :root,
+  html,
+  body {
+    will-change: background-color, color;
+  }
+  
+  :root,
+  html,
+  body,
+  *,
+  *::before,
+  *::after {
+    transition: background-color 0.35s cubic-bezier(0.4, 0, 0.2, 1) 0s,
+                border-color 0.35s cubic-bezier(0.4, 0, 0.2, 1) 0s,
+                color 0.35s cubic-bezier(0.4, 0, 0.2, 1) 0s,
+                fill 0.35s cubic-bezier(0.4, 0, 0.2, 1) 0s,
+                stroke 0.35s cubic-bezier(0.4, 0, 0.2, 1) 0s,
+                box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1) 0s !important;
+  }
+
+  /* No transition for media elements */
+  img,
+  video,
+  iframe,
+  canvas {
+    transition: none !important;
+  }
+
+  /* SVG elements */
+  svg,
+  svg * {
+    transition: fill 0.35s cubic-bezier(0.4, 0, 0.2, 1) 0s,
+                stroke 0.35s cubic-bezier(0.4, 0, 0.2, 1) 0s !important;
   }
 </style>
