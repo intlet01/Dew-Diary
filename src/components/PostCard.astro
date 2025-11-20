@@ -159,8 +159,8 @@ const { time, wordCount } = props.readingMetadata;
   .title {
     @apply flex w-full flex-row items-center space-x-1 align-top text-xl font-semibold text-[var(--text-color)] lg:text-2xl;
     font-family: var(--primary-font);
-    /* Enable transition only for hover, not theme changes */
-    transition: color 0.2s ease !important;
+    /* Natural color transition for hover */
+    transition: color 0.2s ease;
   }
   
   .title:hover {
@@ -200,19 +200,19 @@ const { time, wordCount } = props.readingMetadata;
     @apply absolute left-0 h-full w-0 select-none rounded-r-3xl bg-black opacity-50;
     content: "";
     z-index: 1;
-    /* Hover animation only */
-    transition: width 0.3s ease, height 0.3s ease !important;
+    /* Natural hover animation */
+    transition: width 0.3s ease, height 0.3s ease;
   }
 
-  .cover-wrapper::before:hover {
+  .cover-wrapper:hover::before {
     @apply h-full w-full select-none;
   }
 
   .right-icon {
     @apply absolute left-1/2 top-1/2 z-[10] -translate-x-1/2 -translate-y-1/2 text-white;
     clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
-    /* Hover animation only */
-    transition: clip-path 0.3s ease !important;
+    /* Natural hover animation */
+    transition: clip-path 0.3s ease;
   }
 
   .cover-wrapper:hover .right-icon {
