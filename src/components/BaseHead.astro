@@ -57,5 +57,15 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
   rel="stylesheet"
 />
 
+<!-- Theme initialization (must be before body renders to prevent flash) -->
+<script is:inline>
+  // Immediately set theme before page renders to prevent flash
+  (function() {
+    const theme = localStorage.getItem('theme') || 'light';
+    document.documentElement.classList.toggle('dark', theme === 'dark');
+    document.documentElement.setAttribute('data-theme', theme);
+  })();
+</script>
+
 <GlobalStyles />
 <ScriptSetup />

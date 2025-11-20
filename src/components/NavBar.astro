@@ -310,7 +310,9 @@ const navCount = YukinaConfig.navigators.length;
 
   // Initialize
   document.addEventListener("DOMContentLoaded", () => {
-    setTheme(currentTheme);
+    // Set icon display based on current theme without triggering full setTheme
+    themeIconDark.style.display = currentTheme === "dark" ? "block" : "none";
+    themeIconLight.style.display = currentTheme === "light" ? "block" : "none";
     menuIconClosed.style.display = "block";
   });
 
