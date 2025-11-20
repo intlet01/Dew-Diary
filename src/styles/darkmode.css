@@ -1,0 +1,44 @@
+/* Dark Mode Styles - Mobile Optimized */
+
+/* Ensure dark class works on both :root and html */
+html.dark,
+:root.dark {
+  color-scheme: dark;
+}
+
+/* Dark mode color overrides */
+html.dark,
+:root.dark {
+  --background-color: #2a242d;
+  --text-color: #f2f2f5;
+  --text-color-lighten: #e6e6e9;
+  --card-color: #403340;
+  --card-color-lighten: #665580;
+  --card-color-transparent: rgba(64, 51, 64, 0.85);
+  --primary-color: #b366cc;
+  --primary-color-lighten: #665580;
+  --primary-color-hover: #332940;
+}
+
+/* Force body background in dark mode */
+html.dark body {
+  background-color: #2a242d;
+  color: #f2f2f5;
+}
+
+/* Force all text elements */
+html.dark,
+html.dark * {
+  border-color: rgba(242, 242, 245, 0.1);
+}
+
+/* Debug: Add a visible indicator when dark mode is active */
+html.dark::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  z-index: -1;
+}

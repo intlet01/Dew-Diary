@@ -294,7 +294,9 @@ const navCount = YukinaConfig.navigators.length;
 
   // Set theme
   const setTheme = (theme: string) => {
-    document.documentElement.setAttribute("data-theme", theme);
+    const html = document.documentElement;
+    
+    html.setAttribute("data-theme", theme);
     
     try {
       localStorage.setItem("theme", theme);
@@ -312,11 +314,15 @@ const navCount = YukinaConfig.navigators.length;
     if (theme === "dark") themeIconDark = reinitializeIcon(themeIconDark);
     else themeIconLight = reinitializeIcon(themeIconLight);
 
-    // Toggle dark class properly
+    // Toggle dark class and inline styles
     if (theme === "dark") {
-      document.documentElement.classList.add("dark");
+      html.classList.add("dark");
+      html.style.backgroundColor = '#2a242d';
+      html.style.color = '#f2f2f5';
     } else {
-      document.documentElement.classList.remove("dark");
+      html.classList.remove("dark");
+      html.style.backgroundColor = '';
+      html.style.color = '';
     }
   };
 

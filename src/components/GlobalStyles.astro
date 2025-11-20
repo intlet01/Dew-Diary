@@ -3,6 +3,7 @@ import "../styles/animations.css";
 import "../styles/scrollbar.css";
 import "../styles/transitions.css";
 import "../styles/searchbar.css";
+import "../styles/darkmode.css";
 import "overlayscrollbars/overlayscrollbars.css";
 ---
 
@@ -77,5 +78,18 @@ import "overlayscrollbars/overlayscrollbars.css";
   .swup-progress-bar {
     height: 5px;
     background-color: var(--primary-color);
+  }
+
+  /* Force body styles for dark mode */
+  body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  html.dark body,
+  :root.dark body {
+    background-color: var(--background-color);
+    color: var(--text-color);
   }
 </style>
