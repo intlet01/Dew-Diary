@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Theme Debug - Dew Diary</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #000000;
+            --card-bg: #f5f5f5;
+        }
+        
+        :root.dark {
+            --bg-color: #1a1a1a;
+            --text-color: #ffffff;
+            --card-bg: #2a2a2a;
+        }
+        
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .card {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            transition: background 0.3s;
+        }
+        
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px 5px;
+        }
+        
+        button:active {
+            transform: scale(0.95);
+        }
+        
+        .info {
+            font-size: 14px;
+            line-height: 1.8;
+        }
+        
+        .info strong {
+            color: #007bff;
+        }
+        
+        .status {
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        
+        .success {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        h1 {
+            margin-bottom: 20px;
+        }
+        
+        h2 {
+            margin: 20px 0 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 Theme Debug Page</h1>
+        
+        <div class="card">
+            <h2>Current Status</h2>
+            <div id="status" class="info"></div>
+        </div>
+        
+        <div class="card">
+            <h2>Controls</h2>
+            <button onclick="toggleTheme()">Toggle Theme</button>
+            <button onclick="setLight()">Set Light</button>
+            <button onclick="setDark()">Set Dark</button>
+            <button onclick="clearStorage()">Clear Storage</button>
+        </div>
+        
+        <div class="card">
+            <h2>Tests</h2>
+            <div id="tests"></div>
+        </div>
+    </div>
+
+    <script>
+        function updateStatus() {
+            const statusDiv = document.getElementById('status');
+            const testsDiv = document.getElementById('tests');
+            
+            // Check current theme
+            const hasClass = document.documentElement.classList.contains('dark');
+            const dataTheme = document.documentElement.getAttribute('data-theme');
+            
+            // Check localStorage
+            let storedTheme = 'N/A';
+            let localStorageWorks = false;
+            try {
+                storedTheme = localStorage.getItem('theme') || 'not set';
+                localStorage.setItem('test', 'test');
+                localStorage.removeItem('test');
+                localStorageWorks = true;
+            } catch (e) {
+                storedTheme = 'ERROR: ' + e.message;
+            }
+            
+            // Check system preference
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            
+            // Update status
+            statusDiv.innerHTML = `
+                <p><strong>HTML Class:</strong> ${hasClass ? '✅ dark' : '❌ no dark class'}</p>
+                <p><strong>Data Theme:</strong> ${dataTheme || 'not set'}</p>
+                <p><strong>LocalStorage Theme:</strong> ${storedTheme}</p>
+                <p><strong>LocalStorage Works:</strong> ${localStorageWorks ? '✅ Yes' : '❌ No'}</p>
+                <p><strong>System Prefers Dark:</strong> ${prefersDark ? '✅ Yes' : '❌ No'}</p>
+                <p><strong>Current Background:</strong> ${getComputedStyle(document.body).backgroundColor}</p>
+            `;
+            
+            // Run tests
+            let allTests = '';
+            
+            // Test 1: localStorage
+            allTests += `<div class="status ${localStorageWorks ? 'success' : 'error'}">
+                <strong>Test 1:</strong> localStorage ${localStorageWorks ? 'Available ✅' : 'Not Available ❌'}
+            </div>`;
+            
+            // Test 2: CSS Variables
+            const bgColor = getComputedStyle(document.body).backgroundColor;
+            const isDarkBg = bgColor === 'rgb(26, 26, 26)';
+            allTests += `<div class="status ${isDarkBg ? 'success' : 'error'}">
+                <strong>Test 2:</strong> CSS Variables ${isDarkBg && hasClass ? 'Working ✅' : 'Not Working ❌'}
+            </div>`;
+            
+            // Test 3: Class toggle
+            allTests += `<div class="status ${hasClass === (dataTheme === 'dark') ? 'success' : 'error'}">
+                <strong>Test 3:</strong> Class & Data Sync ${hasClass === (dataTheme === 'dark') ? 'Synced ✅' : 'Out of Sync ❌'}
+            </div>`;
+            
+            testsDiv.innerHTML = allTests;
+        }
+        
+        function toggleTheme() {
+            const isDark = document.documentElement.classList.contains('dark');
+            if (isDark) {
+                setLight();
+            } else {
+                setDark();
+            }
+        }
+        
+        function setDark() {
+            document.documentElement.classList.add('dark');
+            document.documentElement.setAttribute('data-theme', 'dark');
+            try {
+                localStorage.setItem('theme', 'dark');
+            } catch (e) {
+                alert('Cannot save to localStorage: ' + e.message);
+            }
+            updateStatus();
+        }
+        
+        function setLight() {
+            document.documentElement.classList.remove('dark');
+            document.documentElement.setAttribute('data-theme', 'light');
+            try {
+                localStorage.setItem('theme', 'light');
+            } catch (e) {
+                alert('Cannot save to localStorage: ' + e.message);
+            }
+            updateStatus();
+        }
+        
+        function clearStorage() {
+            try {
+                localStorage.removeItem('theme');
+                alert('Storage cleared!');
+            } catch (e) {
+                alert('Cannot clear localStorage: ' + e.message);
+            }
+            updateStatus();
+        }
+        
+        // Initialize on load
+        window.addEventListener('DOMContentLoaded', () => {
+            // Try to load saved theme
+            try {
+                const theme = localStorage.getItem('theme');
+                if (theme === 'dark') {
+                    document.documentElement.classList.add('dark');
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                }
+            } catch (e) {
+                console.error('Init error:', e);
+            }
+            updateStatus();
+        });
+        
+        // Update status every second
+        setInterval(updateStatus, 1000);
+    </script>
+</body>
+</html>

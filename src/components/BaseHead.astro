@@ -61,9 +61,21 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 <script is:inline>
   // Immediately set theme before page renders to prevent flash
   (function() {
-    const theme = localStorage.getItem('theme') || 'light';
-    document.documentElement.classList.toggle('dark', theme === 'dark');
-    document.documentElement.setAttribute('data-theme', theme);
+    try {
+      const theme = localStorage.getItem('theme') || 'light';
+      if (theme === 'dark') {
+        document.documentElement.classList.add('dark');
+      }
+      document.documentElement.setAttribute('data-theme', theme);
+    } catch (e) {
+      // If localStorage is not available (private mode, etc.)
+      // Check for prefers-color-scheme
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (prefersDark) {
+        document.documentElement.classList.add('dark');
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    }
   })();
 </script>
 
