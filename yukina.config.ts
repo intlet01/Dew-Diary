@@ -47,6 +47,10 @@ const YukinaConfig: Configuration = {
       icon: "mingcute:netease-music-line",
       link: "https://music.163.com/#/user/home?id=125291648",
     },
+    {
+      icon: "mingcute:facebook-line",
+      link: "https://www.facebook.com/hasibaminshishir",
+    },
   ],
   maxSidebarCategoryChip: 6, // It is recommended to set it to a common multiple of 2 and 3
   maxSidebarTagChip: 12,
