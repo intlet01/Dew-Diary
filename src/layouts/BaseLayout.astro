@@ -18,13 +18,4 @@ import BaseHead from "../components/BaseHead.astro";
   body {
     @apply bg-[var(--background-color)];
   }
-
-  /* Force dark mode styles for better mobile compatibility */
-  html.dark body,
-  :root.dark body {
-    background-color: #2a242d !important;
-    background-color: var(--background-color) !important;
-    color: #f2f2f5 !important;
-    color: var(--text-color) !important;
-  }
 </style>

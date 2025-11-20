@@ -89,7 +89,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
       if (theme === 'dark') {
         html.classList.add('dark');
         html.setAttribute('data-theme', 'dark');
-        // Temporary inline style until CSS loads (will be overridden by CSS)
+        // Temporary inline style only to prevent flash - will be removed immediately
         html.style.backgroundColor = '#2a242d';
         html.style.color = '#f2f2f5';
       } else {
@@ -107,20 +107,11 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
       }
     }
     
-    // Remove inline styles after CSS loads to let CSS variables take over
-    window.addEventListener('DOMContentLoaded', function() {
-      setTimeout(function() {
-        // Check if CSS variables are working
-        const testEl = document.body;
-        const bgColor = getComputedStyle(testEl).backgroundColor;
-        
-        // If CSS is loaded properly, remove inline styles
-        if (bgColor && bgColor !== 'rgba(0, 0, 0, 0)') {
-          html.style.backgroundColor = '';
-          html.style.color = '';
-        }
-        // Otherwise keep inline styles as fallback
-      }, 100);
+    // IMMEDIATELY remove inline styles to allow CSS transitions
+    // This runs as soon as the script executes, before render
+    requestAnimationFrame(function() {
+      html.style.backgroundColor = '';
+      html.style.color = '';
     });
   })();
 </script>

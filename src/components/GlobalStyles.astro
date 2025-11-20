@@ -93,4 +93,19 @@ import "overlayscrollbars/overlayscrollbars.css";
     background-color: var(--background-color);
     color: var(--text-color);
   }
+
+  /* Smooth transitions for theme switching */
+  html,
+  body,
+  .card,
+  [class*="bg-"],
+  [class*="text-"],
+  nav,
+  header,
+  footer,
+  main {
+    transition: background-color 0.3s ease, 
+                color 0.3s ease, 
+                border-color 0.3s ease;
+  }
 </style>
