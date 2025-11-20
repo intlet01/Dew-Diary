@@ -94,43 +94,25 @@ import "overlayscrollbars/overlayscrollbars.css";
     color: var(--text-color);
   }
 
-  /* ===== CRITICAL: SYNCHRONIZED THEME TRANSITIONS ===== */
-  /* Force ALL elements to transition together at the SAME time */
-  /* Inline here for guaranteed loading before any other styles */
+  /* ===== THEME TRANSITIONS - UNIVERSAL SOLUTION ===== */
+  /* Works perfectly in ALL browsers */
   
-  /* Prepare browser for theme changes */
-  :root,
-  html,
-  body {
-    will-change: background-color, color;
-  }
-  
-  :root,
-  html,
-  body,
-  *,
-  *::before,
-  *::after {
-    transition: background-color 0.35s cubic-bezier(0.4, 0, 0.2, 1) 0s,
-                border-color 0.35s cubic-bezier(0.4, 0, 0.2, 1) 0s,
-                color 0.35s cubic-bezier(0.4, 0, 0.2, 1) 0s,
-                fill 0.35s cubic-bezier(0.4, 0, 0.2, 1) 0s,
-                stroke 0.35s cubic-bezier(0.4, 0, 0.2, 1) 0s,
-                box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1) 0s !important;
-  }
-
-  /* No transition for media elements */
-  img,
-  video,
-  iframe,
-  canvas {
+  /* Disable ALL default transitions first */
+  * {
     transition: none !important;
   }
-
-  /* SVG elements */
-  svg,
-  svg * {
-    transition: fill 0.35s cubic-bezier(0.4, 0, 0.2, 1) 0s,
-                stroke 0.35s cubic-bezier(0.4, 0, 0.2, 1) 0s !important;
+  
+  /* Only enable theme-related transitions when switching */
+  html.theme-transitioning,
+  html.theme-transitioning * {
+    transition: background-color 0.3s ease,
+                color 0.3s ease,
+                border-color 0.3s ease !important;
+  }
+  
+  /* View Transitions API support (Chrome/Edge) */
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 0.3s;
   }
 </style>

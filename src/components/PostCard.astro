@@ -158,8 +158,9 @@ const { time, wordCount } = props.readingMetadata;
 <style>
   .title {
     @apply flex w-full flex-row items-center space-x-1 align-top text-xl font-semibold text-[var(--text-color)] lg:text-2xl;
-    /* Removed transition-all to let theme-transitions.css handle it */
     font-family: var(--primary-font);
+    /* Enable transition only for hover, not theme changes */
+    transition: color 0.2s ease !important;
   }
   
   .title:hover {
@@ -199,10 +200,8 @@ const { time, wordCount } = props.readingMetadata;
     @apply absolute left-0 h-full w-0 select-none rounded-r-3xl bg-black opacity-50;
     content: "";
     z-index: 1;
-    /* Sync with theme transition timing - only animate width/height for hover */
-    transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1),
-                height 0.35s cubic-bezier(0.4, 0, 0.2, 1),
-                background-color 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    /* Hover animation only */
+    transition: width 0.3s ease, height 0.3s ease !important;
   }
 
   .cover-wrapper::before:hover {
@@ -212,10 +211,8 @@ const { time, wordCount } = props.readingMetadata;
   .right-icon {
     @apply absolute left-1/2 top-1/2 z-[10] -translate-x-1/2 -translate-y-1/2 text-white;
     clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
-    /* Sync with theme transition timing */
-    transition: clip-path 0.35s cubic-bezier(0.4, 0, 0.2, 1),
-                fill 0.35s cubic-bezier(0.4, 0, 0.2, 1),
-                color 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    /* Hover animation only */
+    transition: clip-path 0.3s ease !important;
   }
 
   .cover-wrapper:hover .right-icon {

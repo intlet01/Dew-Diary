@@ -302,36 +302,56 @@ const navCount = YukinaConfig.navigators.length;
     currentTheme = prefersDark ? "dark" : "light";
   }
 
-  // Set theme
+  // Set theme with controlled transition
   const setTheme = (theme: string) => {
     const html = document.documentElement;
     const themeSwitcherBtn = document.getElementById("theme-switcher");
     
-    html.setAttribute("data-theme", theme);
+    // Function to apply theme changes
+    const applyTheme = () => {
+      html.setAttribute("data-theme", theme);
+      
+      try {
+        localStorage.setItem("theme", theme);
+      } catch (e) {
+        console.warn('localStorage not available:', e);
+      }
+      
+      currentTheme = theme;
+
+      // Show/hide icons
+      themeIconDark.style.display = theme === "dark" ? "block" : "none";
+      themeIconLight.style.display = theme === "light" ? "block" : "none";
+
+      if (theme === "dark") themeIconDark = reinitializeIcon(themeIconDark);
+      else themeIconLight = reinitializeIcon(themeIconLight);
+
+      // Toggle dark class
+      if (theme === "dark") {
+        html.classList.add("dark");
+        if (themeSwitcherBtn) themeSwitcherBtn.setAttribute("aria-pressed", "true");
+      } else {
+        html.classList.remove("dark");
+        if (themeSwitcherBtn) themeSwitcherBtn.setAttribute("aria-pressed", "false");
+      }
+    };
     
-    try {
-      localStorage.setItem("theme", theme);
-    } catch (e) {
-      console.warn('localStorage not available:', e);
-    }
-    
-    currentTheme = theme;
-
-    // Show/hide icons for different themes
-    themeIconDark.style.display = theme === "dark" ? "block" : "none";
-    themeIconLight.style.display = theme === "light" ? "block" : "none";
-
-    // If the theme is dark, update the dark icon; otherwise, update the light icon
-    if (theme === "dark") themeIconDark = reinitializeIcon(themeIconDark);
-    else themeIconLight = reinitializeIcon(themeIconLight);
-
-    // Toggle dark class smoothly (no inline styles for smooth transition)
-    if (theme === "dark") {
-      html.classList.add("dark");
-      if (themeSwitcherBtn) themeSwitcherBtn.setAttribute("aria-pressed", "true");
-    } else {
-      html.classList.remove("dark");
-      if (themeSwitcherBtn) themeSwitcherBtn.setAttribute("aria-pressed", "false");
+    // Try View Transitions API first (modern browsers)
+    if (document.startViewTransition) {
+      document.startViewTransition(() => applyTheme());
+    } 
+    // Fallback: Manual controlled transition (works everywhere)
+    else {
+      // Step 1: Enable transitions
+      html.classList.add('theme-transitioning');
+      
+      // Step 2: Apply theme (this will now transition smoothly)
+      applyTheme();
+      
+      // Step 3: Disable transitions after animation completes
+      setTimeout(() => {
+        html.classList.remove('theme-transitioning');
+      }, 300); // Match CSS transition duration
     }
   };
 
@@ -339,16 +359,12 @@ const navCount = YukinaConfig.navigators.length;
   themeSwitcher.addEventListener("click", () => {
     const newTheme = currentTheme === "light" ? "dark" : "light";
     
-    // Debug: Log transition status
+    // Debug log (only on localhost)
     if (window.location.hostname === 'localhost' || window.location.hostname.includes('127.0.0.1')) {
-      const html = document.documentElement;
-      const computedStyle = getComputedStyle(html);
-      console.log('🎨 Theme Switch:', {
-        from: currentTheme,
-        to: newTheme,
-        htmlTransition: computedStyle.transition.substring(0, 100),
-        hasTransition: computedStyle.transition.includes('background-color')
-      });
+      const method = document.startViewTransition 
+        ? '🚀 View Transitions API (Hardware Accelerated)' 
+        : '🎯 Controlled CSS Transitions (Universal)';
+      console.log(`🎨 Theme: ${currentTheme} → ${newTheme} | Method: ${method}`);
     }
     
     setTheme(newTheme);
